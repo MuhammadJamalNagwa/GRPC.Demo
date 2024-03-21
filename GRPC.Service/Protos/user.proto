@@ -1,0 +1,93 @@
+syntax = "proto3";
+
+option csharp_namespace = "GRPC.Service.Protos";
+
+import "google/api/annotations.proto";
+
+package userpackage;
+
+service IUserService
+{
+	rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) 
+	{
+		option(google.api.http) = {
+			post: "/v1/users",
+			body: "*"
+		};
+	}
+
+	rpc GetUser(GetUserRequest) returns (GetUserResponse) 
+	{
+		option(google.api.http) = {
+			get: "/v1/users/{id}"
+		};
+	}
+
+	rpc GetUsersList(GetUsersListRequest) returns (GetUsersListResponse) 
+	{
+		option(google.api.http) = {
+			get: "/v1/users"
+		};
+	}
+
+	rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse) 
+	{
+		option(google.api.http) = {
+			put: "/v1/users/{id}",
+			body: "*"
+		};
+	}
+
+	rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse) 
+	{
+		option(google.api.http) = {
+			delete: "/v1/users/{id}"
+		};
+	}
+}
+message CreateUserRequest {
+	string name = 1;
+	int32 age = 2;
+	string email = 3;
+	string address = 4;
+}
+message CreateUserResponse {
+	int32 id = 1;
+}
+message GetUserRequest {
+	int32 id = 1;
+}
+message GetUserResponse {
+	int32 id = 1;
+	string name = 2;
+	int32 age = 3;
+	string email = 4;
+	string address = 5;
+}
+message GetUsersListRequest 
+{
+	int32 page_size = 1;
+	int32 page_number = 2;
+}
+message GetUsersListResponse {
+	repeated GetUserResponse user_list = 1;
+	int32 total_count = 2;
+	int32 total_pages = 3;
+	int32 current_page = 4;
+}
+message UpdateUserRequest {
+	int32 id = 1;
+	string name = 2;
+	int32 age = 3;
+	string email = 4;
+	string address = 5;
+}
+message UpdateUserResponse {
+	int32 id = 1;
+}
+message DeleteUserRequest {
+	int32 id = 1;
+}
+message DeleteUserResponse {
+	int32 id = 1;
+}
